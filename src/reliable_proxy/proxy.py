@@ -47,8 +47,13 @@ class ReliableOptimizationProxy:
         if model.input_dim != expected_input or model.output_dim != unit_count:
             raise ValueError("model dimensions are incompatible with unit_count")
         metadata_unit_count = model.metadata.get("unit_count")
-        if metadata_unit_count is not None and int(metadata_unit_count) != unit_count:
-            raise ValueError("checkpoint unit_count does not match the proxy")
+        if metadata_unit_count is not None:
+            if isinstance(metadata_unit_count, bool) or not isinstance(
+                metadata_unit_count, (int, str)
+            ):
+                raise ValueError("checkpoint unit_count must be integer-like")
+            if int(metadata_unit_count) != unit_count:
+                raise ValueError("checkpoint unit_count does not match the proxy")
         feature_schema = model.metadata.get("feature_schema_version")
         if feature_schema is not None and feature_schema != FEATURE_SCHEMA_VERSION:
             raise ValueError("checkpoint feature schema is incompatible")
@@ -59,6 +64,8 @@ class ReliableOptimizationProxy:
     def load(cls, path: str | Path) -> ReliableOptimizationProxy:
         model = NumpyMLPProxy.load(path)
         unit_count_raw = model.metadata.get("unit_count", model.output_dim)
+        if isinstance(unit_count_raw, bool) or not isinstance(unit_count_raw, (int, str)):
+            raise ValueError("checkpoint unit_count must be integer-like")
         return cls(model, unit_count=int(unit_count_raw))
 
     def predict_raw(self, instance: DispatchInstance) -> tuple[tuple[float, ...], float]:
