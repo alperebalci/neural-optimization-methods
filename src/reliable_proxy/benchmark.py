@@ -69,7 +69,6 @@ def _gap(value: float, reference: float) -> tuple[float, float]:
     return absolute, 100.0 * absolute / max(1.0, abs(reference))
 
 
-
 def _candidate_row(
     instance: DispatchInstance,
     exact: ExactSolution,
@@ -136,9 +135,7 @@ def _summarize(rows: list[BenchmarkRow]) -> dict[str, dict[str, float | None]]:
         selected = [row for row in rows if row.method == method]
         gaps = [row.actual_gap_percent for row in selected if row.actual_gap_percent is not None]
         certificate_gaps = [
-            row.certified_gap_percent
-            for row in selected
-            if row.certified_gap_percent is not None
+            row.certified_gap_percent for row in selected if row.certified_gap_percent is not None
         ]
         times = [row.total_seconds for row in selected]
         sorted_times = sorted(times)
