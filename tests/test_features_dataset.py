@@ -36,9 +36,7 @@ def test_canonical_features_are_permutation_stable(hand_instance: DispatchInstan
 
 
 def test_dataset_round_trip_and_summary(tmp_path: Path) -> None:
-    dataset = build_dataset(
-        generate_instances(8, unit_count=5, regime="in_distribution", seed=100)
-    )
+    dataset = build_dataset(generate_instances(8, unit_count=5, regime="in_distribution", seed=100))
     path = tmp_path / "dataset.npz"
     save_dataset(dataset, path)
     loaded = load_dataset(path)
