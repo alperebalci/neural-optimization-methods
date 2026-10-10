@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
+from typing import cast
 
 import numpy as np
 
@@ -29,7 +30,7 @@ def box_minimizer(instance: DispatchInstance, multiplier: float) -> np.ndarray:
     linear = np.asarray(instance.linear_costs, dtype=float)
     lower = np.asarray(instance.lower_bounds, dtype=float)
     upper = np.asarray(instance.upper_bounds, dtype=float)
-    return np.clip(-(linear + multiplier) / quadratic, lower, upper)
+    return cast(np.ndarray, np.clip(-(linear + multiplier) / quadratic, lower, upper))
 
 
 def dual_value(instance: DispatchInstance, multiplier: float) -> float:
