@@ -114,7 +114,7 @@ def solve_exact(
     multiplier = 0.5 * (low + high)
     decision = box_minimizer(instance, multiplier)
     iterations = 0
-    for iterations in range(1, max_iterations + 1):
+    for iterations in range(1, max_iterations + 1):  # noqa: B007 - iteration count returned
         multiplier = 0.5 * (low + high)
         decision = box_minimizer(instance, multiplier)
         balance = float(np.sum(decision)) - instance.demand
