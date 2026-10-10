@@ -51,7 +51,9 @@ _REGIMES: dict[DispatchRegime, _Parameters] = {
 }
 
 
-def generate_instance(config: GeneratorConfig | None = None, **overrides: object) -> DispatchInstance:
+def generate_instance(
+    config: GeneratorConfig | None = None, **overrides: object
+) -> DispatchInstance:
     """Generate one reproducible strictly feasible dispatch instance."""
 
     if config is not None and overrides:
