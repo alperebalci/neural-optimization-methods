@@ -36,9 +36,7 @@ def _small_trained_proxy() -> ReliableOptimizationProxy:
 
 
 def test_model_training_reduces_loss_and_checkpoint_round_trip(tmp_path: Path) -> None:
-    train = build_dataset(
-        generate_instances(100, unit_count=5, regime="in_distribution", seed=10)
-    )
+    train = build_dataset(generate_instances(100, unit_count=5, regime="in_distribution", seed=10))
     validation = build_dataset(
         generate_instances(24, unit_count=5, regime="in_distribution", seed=500)
     )
@@ -101,9 +99,7 @@ def test_untrained_model_falls_back_under_zero_gap_tolerance() -> None:
 
 def test_trained_proxy_returns_feasible_decision() -> None:
     proxy = _small_trained_proxy()
-    instance = generate_instance(
-        GeneratorConfig(unit_count=6, regime="capacity_shift", seed=8000)
-    )
+    instance = generate_instance(GeneratorConfig(unit_count=6, regime="capacity_shift", seed=8000))
     result = proxy.solve(instance, relative_gap_tolerance=0.05)
     assert result.projection.audit.feasible
     assert result.certificate.valid
