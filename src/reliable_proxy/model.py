@@ -106,10 +106,12 @@ class NumpyMLPProxy:
     def _loss(self, x: np.ndarray, y: np.ndarray, weight_decay: float) -> float:
         prediction = self._forward(x)[2]
         mse = float(np.mean((prediction - y) ** 2))
-        penalty = 0.5 * weight_decay * float(
-            np.sum(self.w1 * self.w1)
-            + np.sum(self.w2 * self.w2)
-            + np.sum(self.w3 * self.w3)
+        penalty = (
+            0.5
+            * weight_decay
+            * float(
+                np.sum(self.w1 * self.w1) + np.sum(self.w2 * self.w2) + np.sum(self.w3 * self.w3)
+            )
         )
         return mse + penalty
 
@@ -139,8 +141,7 @@ class NumpyMLPProxy:
         if validation_y.shape != (validation_x.shape[0], self.output_dim):
             raise ValueError("validation_targets have the wrong shape")
         if not all(
-            np.all(np.isfinite(values))
-            for values in (train_x, train_y, validation_x, validation_y)
+            np.all(np.isfinite(values)) for values in (train_x, train_y, validation_x, validation_y)
         ):
             raise ValueError("training arrays must be finite")
 
@@ -193,8 +194,7 @@ class NumpyMLPProxy:
                 norm = float(np.sqrt(sum(np.sum(gradient * gradient) for gradient in gradients)))
                 if norm > config.gradient_clip:
                     gradients = [
-                        gradient * config.gradient_clip / max(norm, 1e-12)
-                        for gradient in gradients
+                        gradient * config.gradient_clip / max(norm, 1e-12) for gradient in gradients
                     ]
                 step += 1
                 for index, (parameter, gradient) in enumerate(

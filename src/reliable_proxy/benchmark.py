@@ -69,7 +69,6 @@ def _gap(value: float, reference: float) -> tuple[float, float]:
     return absolute, 100.0 * absolute / max(1.0, abs(reference))
 
 
-
 def _candidate_row(
     instance: DispatchInstance,
     exact: ExactSolution,
@@ -136,9 +135,7 @@ def _summarize(rows: list[BenchmarkRow]) -> dict[str, dict[str, float | None]]:
         selected = [row for row in rows if row.method == method]
         gaps = [row.actual_gap_percent for row in selected if row.actual_gap_percent is not None]
         certificate_gaps = [
-            row.certified_gap_percent
-            for row in selected
-            if row.certified_gap_percent is not None
+            row.certified_gap_percent for row in selected if row.certified_gap_percent is not None
         ]
         times = [row.total_seconds for row in selected]
         sorted_times = sorted(times)
@@ -278,34 +275,34 @@ def run_benchmark(
 
     curve: list[dict[str, float]] = []
     for tolerance in curve_tolerances:
-        accepted = [
+        accepted_records = [
             (certified_gap, actual_gap, objective)
             for certified_gap, actual_gap, objective in projected_records
             if certified_gap <= absolute_gap_tolerance + tolerance * max(1.0, abs(objective))
         ]
         violations = sum(
             actual_gap > certified_gap + 1e-7 * max(1.0, abs(objective))
-            for certified_gap, actual_gap, objective in accepted
+            for certified_gap, actual_gap, objective in accepted_records
         )
         curve.append(
             {
                 "relative_tolerance": tolerance,
-                "acceptance_rate": len(accepted) / len(projected_records),
-                "fallback_rate": 1.0 - len(accepted) / len(projected_records),
+                "acceptance_rate": len(accepted_records) / len(projected_records),
+                "fallback_rate": 1.0 - len(accepted_records) / len(projected_records),
                 "mean_actual_gap_percent": (
                     statistics.fmean(
                         100.0 * actual / max(1.0, abs(objective))
-                        for _, actual, objective in accepted
+                        for _, actual, objective in accepted_records
                     )
-                    if accepted
+                    if accepted_records
                     else 0.0
                 ),
                 "max_actual_gap_percent": (
                     max(
                         100.0 * actual / max(1.0, abs(objective))
-                        for _, actual, objective in accepted
+                        for _, actual, objective in accepted_records
                     )
-                    if accepted
+                    if accepted_records
                     else 0.0
                 ),
                 "guarantee_violations": float(violations),

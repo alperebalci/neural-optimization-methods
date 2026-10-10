@@ -55,12 +55,7 @@ class DispatchInstance:
         size = len(self.quadratic_costs)
         if size < 2:
             raise ValueError("at least two production units are required")
-        if not (
-            len(self.linear_costs)
-            == len(self.lower_bounds)
-            == len(self.upper_bounds)
-            == size
-        ):
+        if not (len(self.linear_costs) == len(self.lower_bounds) == len(self.upper_bounds) == size):
             raise ValueError("all coefficient vectors must have the same length")
         values = (
             *self.quadratic_costs,

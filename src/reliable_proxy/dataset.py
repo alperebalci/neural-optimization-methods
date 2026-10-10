@@ -10,7 +10,12 @@ from typing import cast
 import numpy as np
 
 from reliable_proxy.domain import DispatchInstance
-from reliable_proxy.features import FEATURE_SCHEMA_VERSION, decision_to_canonical, featurize, feature_names
+from reliable_proxy.features import (
+    FEATURE_SCHEMA_VERSION,
+    decision_to_canonical,
+    feature_names,
+    featurize,
+)
 from reliable_proxy.oracle import solve_exact
 
 
@@ -39,11 +44,11 @@ class ProxyDataset:
 
     @property
     def sample_count(self) -> int:
-        return self.features.shape[0]
+        return int(self.features.shape[0])
 
     @property
     def unit_count(self) -> int:
-        return self.targets.shape[1]
+        return int(self.targets.shape[1])
 
     def summary(self) -> dict[str, object]:
         return {

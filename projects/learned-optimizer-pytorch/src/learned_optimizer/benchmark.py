@@ -136,9 +136,7 @@ def _compare_specs(
 ) -> dict[str, dict[str, float]]:
     rows: dict[str, list[MethodResult]] = {"learned_lstm": [], "adam": [], "sgd": []}
     for loss_fn, x0 in specs:
-        rows["learned_lstm"].append(
-            _score(_learned_history(model, loss_fn, x0, steps=steps))
-        )
+        rows["learned_lstm"].append(_score(_learned_history(model, loss_fn, x0, steps=steps)))
         rows["adam"].append(_score(optimize_adam(loss_fn, x0, steps=steps, lr=adam_lr)))
         rows["sgd"].append(_score(optimize_sgd(loss_fn, x0, steps=steps, lr=sgd_lr)))
     return _aggregate(rows)
@@ -172,12 +170,8 @@ def evaluate_suite(
     )
     learning_rates = {
         "in_distribution": {
-            "adam": _tune_lr(
-                "adam", tune_id, steps=steps, candidates=(0.01, 0.03, 0.05, 0.1, 0.2)
-            ),
-            "sgd": _tune_lr(
-                "sgd", tune_id, steps=steps, candidates=(0.005, 0.01, 0.02, 0.05, 0.1)
-            ),
+            "adam": _tune_lr("adam", tune_id, steps=steps, candidates=(0.01, 0.03, 0.05, 0.1, 0.2)),
+            "sgd": _tune_lr("sgd", tune_id, steps=steps, candidates=(0.005, 0.01, 0.02, 0.05, 0.1)),
         },
         "ood_quadratic": {
             "adam": _tune_lr(
