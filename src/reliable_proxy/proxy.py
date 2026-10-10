@@ -12,8 +12,8 @@ from reliable_proxy.domain import DispatchInstance
 from reliable_proxy.features import (
     FEATURE_SCHEMA_VERSION,
     decision_from_canonical,
-    featurize,
     feature_names,
+    featurize,
 )
 from reliable_proxy.model import NumpyMLPProxy
 from reliable_proxy.oracle import ExactSolution, solve_exact
