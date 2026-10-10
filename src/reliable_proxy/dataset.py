@@ -44,11 +44,11 @@ class ProxyDataset:
 
     @property
     def sample_count(self) -> int:
-        return self.features.shape[0]
+        return int(self.features.shape[0])
 
     @property
     def unit_count(self) -> int:
-        return self.targets.shape[1]
+        return int(self.targets.shape[1])
 
     def summary(self) -> dict[str, object]:
         return {
