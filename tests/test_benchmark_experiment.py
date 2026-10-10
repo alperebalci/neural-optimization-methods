@@ -11,9 +11,7 @@ from reliable_proxy.training import train_proxy
 
 
 def _proxy_for_benchmark():
-    train = build_dataset(
-        generate_instances(90, unit_count=4, regime="in_distribution", seed=100)
-    )
+    train = build_dataset(generate_instances(90, unit_count=4, regime="in_distribution", seed=100))
     validation = build_dataset(
         generate_instances(20, unit_count=4, regime="in_distribution", seed=1000)
     )
