@@ -10,7 +10,12 @@ from typing import cast
 import numpy as np
 
 from reliable_proxy.domain import DispatchInstance
-from reliable_proxy.features import FEATURE_SCHEMA_VERSION, decision_to_canonical, featurize, feature_names
+from reliable_proxy.features import (
+    FEATURE_SCHEMA_VERSION,
+    decision_to_canonical,
+    feature_names,
+    featurize,
+)
 from reliable_proxy.oracle import solve_exact
 
 

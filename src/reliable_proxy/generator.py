@@ -87,6 +87,8 @@ def generate_instances(
     if count <= 0:
         raise ValueError("count must be positive")
     return tuple(
-        generate_instance(GeneratorConfig(unit_count=unit_count, regime=regime, seed=seed + index))
+        generate_instance(
+            GeneratorConfig(unit_count=unit_count, regime=regime, seed=seed + index)
+        )
         for index in range(count)
     )

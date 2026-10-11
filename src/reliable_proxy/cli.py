@@ -10,7 +10,7 @@ from pathlib import Path
 
 from reliable_proxy.benchmark import run_benchmark, save_report_csv, save_report_json
 from reliable_proxy.dataset import build_dataset, load_dataset, save_dataset
-from reliable_proxy.domain import DispatchInstance, DispatchRegime, load_instance, save_instance
+from reliable_proxy.domain import DispatchInstance, load_instance, save_instance
 from reliable_proxy.experiment import ResearchConfig, run_research_experiment, save_research_report
 from reliable_proxy.generator import GeneratorConfig, generate_instance, generate_instances
 from reliable_proxy.model import TrainingConfig
