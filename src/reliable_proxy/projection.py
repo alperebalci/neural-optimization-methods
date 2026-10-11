@@ -72,8 +72,7 @@ def project_feasible(
     projected = np.clip(raw, lower, upper)
     multiplier = 0.0
     iterations = 0
-    for iteration in range(1, max_iterations + 1):
-        iterations = iteration
+    for iterations in range(1, max_iterations + 1):  # noqa: B007 - iteration count returned
         multiplier = 0.5 * (low + high)
         projected = np.clip(raw - multiplier, lower, upper)
         residual = float(np.sum(projected)) - instance.demand

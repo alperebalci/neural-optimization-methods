@@ -34,7 +34,6 @@ def test_meta_gradient_reaches_optimizer_parameters():
     meta_loss = task.loss(x + update)
     meta_loss.backward()
     finite_grads = [
-        param.grad is not None and torch.isfinite(param.grad).all()
-        for param in model.parameters()
+        param.grad is not None and torch.isfinite(param.grad).all() for param in model.parameters()
     ]
     assert any(finite_grads)

@@ -33,15 +33,9 @@ _REGIMES: dict[DispatchRegime, _Parameters] = {
     "in_distribution": _Parameters(
         (0.35, 2.25), (1.5, 8.0), (8.0, 24.0), (0.0, 0.10), (0.25, 0.75)
     ),
-    "high_demand": _Parameters(
-        (0.35, 2.25), (1.5, 8.0), (8.0, 24.0), (0.0, 0.10), (0.84, 0.97)
-    ),
-    "low_demand": _Parameters(
-        (0.35, 2.25), (1.5, 8.0), (8.0, 24.0), (0.0, 0.10), (0.03, 0.18)
-    ),
-    "cost_shift": _Parameters(
-        (1.6, 4.5), (7.0, 18.0), (8.0, 24.0), (0.0, 0.10), (0.25, 0.75)
-    ),
+    "high_demand": _Parameters((0.35, 2.25), (1.5, 8.0), (8.0, 24.0), (0.0, 0.10), (0.84, 0.97)),
+    "low_demand": _Parameters((0.35, 2.25), (1.5, 8.0), (8.0, 24.0), (0.0, 0.10), (0.03, 0.18)),
+    "cost_shift": _Parameters((1.6, 4.5), (7.0, 18.0), (8.0, 24.0), (0.0, 0.10), (0.25, 0.75)),
     "capacity_shift": _Parameters(
         (0.35, 2.25), (1.5, 8.0), (22.0, 52.0), (0.0, 0.16), (0.25, 0.75)
     ),
@@ -51,7 +45,9 @@ _REGIMES: dict[DispatchRegime, _Parameters] = {
 }
 
 
-def generate_instance(config: GeneratorConfig | None = None, **overrides: object) -> DispatchInstance:
+def generate_instance(
+    config: GeneratorConfig | None = None, **overrides: object
+) -> DispatchInstance:
     """Generate one reproducible strictly feasible dispatch instance."""
 
     if config is not None and overrides:
@@ -87,8 +83,6 @@ def generate_instances(
     if count <= 0:
         raise ValueError("count must be positive")
     return tuple(
-        generate_instance(
-            GeneratorConfig(unit_count=unit_count, regime=regime, seed=seed + index)
-        )
+        generate_instance(GeneratorConfig(unit_count=unit_count, regime=regime, seed=seed + index))
         for index in range(count)
     )

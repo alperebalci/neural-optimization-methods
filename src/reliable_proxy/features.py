@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import cast
 
 import numpy as np
 
@@ -91,7 +92,7 @@ def decision_to_canonical(
     values = np.asarray(decision, dtype=float)
     if values.shape != (len(order),):
         raise ValueError("decision and order have incompatible shapes")
-    return values[np.asarray(order, dtype=int)]
+    return cast(np.ndarray, values[np.asarray(order, dtype=int)])
 
 
 def decision_from_canonical(

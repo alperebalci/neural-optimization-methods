@@ -188,17 +188,17 @@ def main(argv: Sequence[str] | None = None) -> int:
                 regime=args.regime,
                 seed=args.seed,
             )
-            report = run_benchmark(
+            benchmark_report = run_benchmark(
                 instances,
                 proxy,
                 relative_gap_tolerance=args.relative_gap_tolerance,
                 absolute_gap_tolerance=args.absolute_gap_tolerance,
             )
             if args.output_json:
-                save_report_json(report, args.output_json)
+                save_report_json(benchmark_report, args.output_json)
             if args.output_csv:
-                save_report_csv(report, args.output_csv)
-            _write_or_print(report.to_dict())
+                save_report_csv(benchmark_report, args.output_csv)
+            _write_or_print(benchmark_report.to_dict())
             return 0
 
         config = ResearchConfig(
@@ -215,14 +215,14 @@ def main(argv: Sequence[str] | None = None) -> int:
             absolute_gap_tolerance=args.absolute_gap_tolerance,
             seed=args.seed,
         )
-        proxy, report = run_research_experiment(config)
+        proxy, research_report = run_research_experiment(config)
         proxy.model.save(args.checkpoint)
-        save_research_report(report, args.output_report)
+        save_research_report(research_report, args.output_report)
         _write_or_print(
             {
                 "checkpoint": str(args.checkpoint),
                 "report": str(args.output_report),
-                "validation_rmse": report.training.validation_rmse,
+                "validation_rmse": research_report.training.validation_rmse,
             }
         )
         return 0

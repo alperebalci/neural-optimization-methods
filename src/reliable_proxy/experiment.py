@@ -59,12 +59,8 @@ class ResearchReport:
         return {
             "config": asdict(self.config),
             "training": self.training.to_dict(),
-            "scenarios": {
-                name: report.to_dict() for name, report in self.scenarios.items()
-            },
-            "seed_ranges": {
-                name: list(bounds) for name, bounds in self.seed_ranges.items()
-            },
+            "scenarios": {name: report.to_dict() for name, report in self.scenarios.items()},
+            "seed_ranges": {name: list(bounds) for name, bounds in self.seed_ranges.items()},
         }
 
 
