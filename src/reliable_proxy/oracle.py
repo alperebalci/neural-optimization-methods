@@ -114,6 +114,7 @@ def solve_exact(
     multiplier = 0.5 * (low + high)
     decision = box_minimizer(instance, multiplier)
     iterations = 0
+    # Preserve the actual bisection step count in the solution metadata.
     for iteration in range(1, max_iterations + 1):
         iterations = iteration
         multiplier = 0.5 * (low + high)
